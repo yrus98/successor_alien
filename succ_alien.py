@@ -24,23 +24,21 @@ def decode_alien_string(n, dict_B_to_digit):
 			raise Exception("Input Error: Number n contains characters not defined in the character set B!")
 	return num
 
-def convert_to_base10(num, base):
-	num10 = 0
-	power = 0
-
-	while num!=0:
-		num10 += (num%10) * (base ** power)
-		power +=1
-		num = num//10
-	
-	return num10
-
-def convert_to_base_B_string(num10, base):
-	numB = ""
-	while num10!=0:
-		numB = str(num10%base) + numB
-		num10 = num10//base
-	return numB
+def increment_n(n, base):
+	succ = ""
+	carry = 1
+	while n!=0:
+		last_digit = n%10
+		last_digit += carry
+		if last_digit == base:
+			succ = "0" + succ
+		else:
+			succ = str(last_digit) + succ
+			carry = 0
+		n = n//10
+	if carry == 1:
+		succ = "1" + succ
+	return succ
 
 def succ_alien(n, B):
 	dict_B_to_digit = create_dict_B_to_digit(B)
@@ -49,11 +47,7 @@ def succ_alien(n, B):
 
 	numB = decode_alien_string(n, dict_B_to_digit)
 
-	num10 = convert_to_base10(numB, base)
-	# Increment
-	num10 += 1
-	
-	numB = convert_to_base_B_string(num10, base)
+	numB = increment_n(numB, base)
 
 	succ = encode_to_alien_string(numB, len(n)-len(numB), B)
 
