@@ -1,17 +1,25 @@
 
+def create_dict_B_to_digit(B):
+	dict_B_to_digit = dict()
+	value = 0
+	for char in B:
+		dict_B_to_digit[char] = value
+		value += 1
+	return dict_B_to_digit
+
 def encode_to_alien_string(num, leading_zeros, B):
 	succ = B[0] * leading_zeros
 	for ni in num:
 		succ += B[int(ni)]
 	return succ
 
-def decode_alien_string(n, B):
+def decode_alien_string(n, dict_B_to_digit):
 	num = 0
-	for ni in range(len(n)):
-		for ci in range(len(B)):
-			if n[ni]==B[ci]:
-				num = (num*10) + ci 
-				break
+	for char in n:
+		if char in dict_B_to_digit:
+			num = (num * 10) + dict_B_to_digit[char]
+		else:
+			raise Exception("Input Error: Number n contains characters not defined in the character set B!")
 	return num
 
 def convert_to_base10(num5):
@@ -33,7 +41,9 @@ def convert_to_base5_string(num10):
 	return num5
 
 def succ_alien(n, B):
-	num5 = decode_alien_string(n, B)
+	dict_B_to_digit = create_dict_B_to_digit(B)
+
+	num5 = decode_alien_string(n, dict_B_to_digit)
 
 	num10 = convert_to_base10(num5)
 	# Increment
