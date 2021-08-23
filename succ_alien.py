@@ -1,4 +1,10 @@
 
+def encode_to_alien_string(num, leading_zeros, B):
+	succ = B[0] * leading_zeros
+	for ni in num:
+		succ += B[int(ni)]
+	return succ
+
 def decode_alien_string(n, B):
 	num = 0
 	for ni in range(len(n)):
@@ -35,9 +41,7 @@ def succ_alien(n, B):
 	
 	num5 = convert_to_base5_string(num10)
 
-	succ = B[0] * (len(n) - len(num5))
-	for ni in num5:
-		succ += B[int(ni)]
+	succ = encode_to_alien_string(num5, len(n)-len(num5), B)
 
 	return succ
 
