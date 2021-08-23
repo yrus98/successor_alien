@@ -24,30 +24,36 @@ def decode_alien_string(n, dict_B_to_digit):
 			raise Exception("Input Error: Number n contains characters not defined in the character set B!")
 	return num
 
-def increment_n(n, base):
+def increment_n(n, base, step=1):
 	succ = ""
-	carry = 1
+	carry = step
 	while n!=0:
 		last_digit = n%10
 		last_digit += carry
-		if last_digit == base:
-			succ = "0" + succ
+		if last_digit >= base:
+			succ = str(last_digit%base) + succ
+			carry = last_digit//base
 		else:
 			succ = str(last_digit) + succ
 			carry = 0
 		n = n//10
-	if carry == 1:
-		succ = "1" + succ
+	while carry > 0:
+		if carry >= base:
+			succ = str(carry%base) + succ
+			carry = carry//base
+		else:
+			succ = str(carry) + succ
+			break
 	return succ
 
-def succ_alien(n, B):
+def succ_alien(n, B, step=1):
 	dict_B_to_digit = create_dict_B_to_digit(B)
 
 	base = len(B)
 
 	numB = decode_alien_string(n, dict_B_to_digit)
 
-	numB = increment_n(numB, base)
+	numB = increment_n(numB, base, step)
 
 	succ = encode_to_alien_string(numB, len(n)-len(numB), B)
 
@@ -59,3 +65,4 @@ if __name__ == "__main__":
 	print("n='!@^&*', B='!@^&*' succ_alien:",succ_alien("!@^&*", "!@^&*"))
 	print("n='!!!***', B='!@^&*' succ_alien:",succ_alien("!!!***", "!@^&*"))
 	print("n='!@^&*#', B='!@^&*#' succ_alien:",succ_alien("!@^&*#", "!@^&*#"))
+	print("n='!!!***', B='!@^&*', step=3 succ_alien:",succ_alien("!!!***", "!@^&*", 3))
