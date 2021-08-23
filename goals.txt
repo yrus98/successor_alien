@@ -1,0 +1,19 @@
+Intermediate design goals : 
+
+- Create basic functionality for calculating the successor of alien number having base 5.
+
+- Show leading zeros if input contains leading zeros and output length is less than raw input.
+
+- Seperate functions to convert to base 5 and base 10 systems.
+
+- Seperate functions to encode and decode alien strings.
+
+- Optimize retrieving values correspoding to characters of B.
+
+- Scale function to work with any base system instead of just base 5.
+
+- Add new testcases.
+
+- Increment the number directly without needing to convert to any intermediate base (base 10) system.
+
+- Find any successor of n, not necessarily the immediate next one. The step size can be given as input.
