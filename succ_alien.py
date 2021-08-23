@@ -17,7 +17,7 @@ def succ_alien(n, B):
 		num5 = str(num10%5) + num5
 		num10 = num10//5
 	# print(num5)
-	succ = ""
+	succ = B[0] * (len(n) - len(num5))
 	for ni in num5:
 		succ += B[int(ni)]
 
