@@ -1,13 +1,22 @@
 
-def convert_to_base10(n, B):
-	num10 = 0
-	power = 0
-	for ni in range(len(n)-1, -1, -1):
+def decode_alien_string(n, B):
+	num = 0
+	for ni in range(len(n)):
 		for ci in range(len(B)):
 			if n[ni]==B[ci]:
-				num10 += ci * (5 ** power)
-				power +=1
+				num = (num*10) + ci 
 				break
+	return num
+
+def convert_to_base10(num5):
+	num10 = 0
+	power = 0
+
+	while num5!=0:
+		num10 += (num5%10) * (5 ** power)
+		power +=1
+		num5 = num5//10
+	
 	return num10
 
 def convert_to_base5_string(num10):
@@ -18,17 +27,14 @@ def convert_to_base5_string(num10):
 	return num5
 
 def succ_alien(n, B):
-	
+	num5 = decode_alien_string(n, B)
 
-	num10 = convert_to_base10(n, B)
+	num10 = convert_to_base10(num5)
 	# Increment
 	num10 += 1
-
-	# print(num10)
 	
 	num5 = convert_to_base5_string(num10)
-	# print(num5)
-	
+
 	succ = B[0] * (len(n) - len(num5))
 	for ni in num5:
 		succ += B[int(ni)]
